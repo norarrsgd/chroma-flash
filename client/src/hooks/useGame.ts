@@ -15,12 +15,12 @@ const initialState: GameState = {
 };
 
 export function getLevelConfig(level: number): LevelConfig {
-  if (level <= 3) return { wordCount: 20, targetWords: 1, flashSpeed: 800 };
-  if (level <= 6) return { wordCount: 30, targetWords: level <= 4 ? 1 : 2, flashSpeed: 650 };
-  if (level <= 9) return { wordCount: 40, targetWords: 2, flashSpeed: 500 };
-  if (level <= 12) return { wordCount: 50, targetWords: 2, flashSpeed: 400 };
-  if (level <= 15) return { wordCount: 60, targetWords: level <= 13 ? 2 : 3, flashSpeed: 300 };
-  return { wordCount: 70, targetWords: 3, flashSpeed: 250 };
+  if (level <= 3) return { wordCount: 15, targetWords: 1, flashSpeed: 700 };
+  if (level <= 6) return { wordCount: 25, targetWords: level <= 4 ? 1 : 2, flashSpeed: 550 };
+  if (level <= 9) return { wordCount: 35, targetWords: 2, flashSpeed: 450 };
+  if (level <= 12) return { wordCount: 45, targetWords: 2, flashSpeed: 350 };
+  if (level <= 15) return { wordCount: 55, targetWords: level <= 13 ? 2 : 3, flashSpeed: 275 };
+  return { wordCount: 65, targetWords: 3, flashSpeed: 200 };
 }
 
 export function useGame() {

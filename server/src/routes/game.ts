@@ -4,12 +4,12 @@ import { generateText } from '../services/ollama';
 const router = Router();
 
 function getWordCount(level: number): number {
-  if (level <= 3) return 20;
-  if (level <= 6) return 30;
-  if (level <= 9) return 40;
-  if (level <= 12) return 50;
-  if (level <= 15) return 60;
-  return 70;
+  if (level <= 3) return 15;
+  if (level <= 6) return 25;
+  if (level <= 9) return 35;
+  if (level <= 12) return 45;
+  if (level <= 15) return 55;
+  return 65;
 }
 
 function getTargetCount(level: number): number {
