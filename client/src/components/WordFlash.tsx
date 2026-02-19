@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface Props {
   words: string[];
@@ -8,6 +8,7 @@ interface Props {
 }
 
 function getORPIndex(word: string): number {
+  if (word.length <= 1) return 0;
   if (word.length <= 3) return 1;
   return Math.floor(word.length / 3);
 }
@@ -15,6 +16,9 @@ function getORPIndex(word: string): number {
 export default function WordFlash({ words, targetIndices, flashSpeed, onComplete }: Props) {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [visible, setVisible] = useState(false);
+  const beforeRef = useRef<HTMLSpanElement>(null);
+  const orpRef = useRef<HTMLSpanElement>(null);
+  const [orpOffset, setOrpOffset] = useState(0);
 
   const targetSet = new Set(targetIndices);
 
@@ -29,13 +33,28 @@ export default function WordFlash({ words, targetIndices, flashSpeed, onComplete
     });
   }, [words.length, onComplete]);
 
-  // Start the sequence
   useEffect(() => {
     setCurrentIndex(0);
     setVisible(true);
   }, []);
 
-  // Cycle through words
+  // Measure and position the ORP letter at center
+  useEffect(() => {
+    if (currentIndex < 0 || currentIndex >= words.length) return;
+
+    // Measure after render
+    requestAnimationFrame(() => {
+      const beforeEl = beforeRef.current;
+      const orpEl = orpRef.current;
+      if (beforeEl && orpEl) {
+        const beforeWidth = beforeEl.getBoundingClientRect().width;
+        const orpWidth = orpEl.getBoundingClientRect().width;
+        // Shift left by: (width of before chars) + (half of ORP char)
+        setOrpOffset(beforeWidth + orpWidth / 2);
+      }
+    });
+  }, [currentIndex, words.length]);
+
   useEffect(() => {
     if (currentIndex < 0 || currentIndex >= words.length) return;
 
@@ -74,9 +93,12 @@ export default function WordFlash({ words, targetIndices, flashSpeed, onComplete
       <div className="word-flash-guide">
         <div className="guide-line" />
       </div>
-      <div className={`word-display ${visible ? 'word-visible' : 'word-hidden'}`}>
-        <span className="word-before">{before}</span>
-        <span className={`orp-letter ${orpClass}`}>{orpChar}</span>
+      <div
+        className={`word-display ${visible ? 'word-visible' : 'word-hidden'}`}
+        style={{ transform: `translateX(-${orpOffset}px)` }}
+      >
+        <span className="word-before" ref={beforeRef}>{before}</span>
+        <span className={`orp-letter ${orpClass}`} ref={orpRef}>{orpChar}</span>
         <span className="word-after">{after}</span>
       </div>
       <div className="word-progress">

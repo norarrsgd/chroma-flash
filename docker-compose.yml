@@ -1,0 +1,21 @@
+services:
+  server:
+    build: ./server
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - db-data:/app/data
+    environment:
+      - DB_PATH=/app/data/chroma-flash.db
+
+  client:
+    build: ./client
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+
+volumes:
+  db-data:

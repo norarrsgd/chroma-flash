@@ -217,6 +217,8 @@ body {
   white-space: nowrap;
   display: flex;
   align-items: baseline;
+  position: absolute;
+  left: 50%;
   transition: opacity 0.08s ease;
   user-select: none;
 }
@@ -465,9 +467,20 @@ body {
   font-weight: 600;
 }
 
-/* === Loading === */
+/* === Loading Overlay === */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(6px);
+}
+
 .loading-text {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: #777;
   animation: pulse 1.5s ease-in-out infinite;
 }

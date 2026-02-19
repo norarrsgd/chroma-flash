@@ -4,12 +4,12 @@ import { generateText } from '../services/ollama';
 const router = Router();
 
 function getWordCount(level: number): number {
-  if (level <= 3) return 50;
-  if (level <= 6) return 60;
-  if (level <= 9) return 70;
-  if (level <= 12) return 80;
-  if (level <= 15) return 90;
-  return 100;
+  if (level <= 3) return 20;
+  if (level <= 6) return 30;
+  if (level <= 9) return 40;
+  if (level <= 12) return 50;
+  if (level <= 15) return 60;
+  return 70;
 }
 
 function getTargetCount(level: number): number {
@@ -50,9 +50,9 @@ router.post('/generate', async (req: Request, res: Response) => {
       words = words.slice(0, wordCount);
     }
 
-    // Select random unique target indices (avoid first/last 3 words)
-    const minIdx = 3;
-    const maxIdx = words.length - 4;
+    // Select random unique target indices (avoid first/last 2 words)
+    const minIdx = 2;
+    const maxIdx = words.length - 3;
     const targetIndices: number[] = [];
 
     while (targetIndices.length < targetCount) {
