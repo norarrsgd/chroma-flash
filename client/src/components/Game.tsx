@@ -40,6 +40,7 @@ export default function Game({ game, loading, onFlashComplete, submitAnswers, ne
               words={game.words}
               targetIndices={game.targetIndices}
               onSubmit={submitAnswers}
+              timeLimit={config.answerTime}
             />
           )}
 
@@ -49,6 +50,11 @@ export default function Game({ game, loading, onFlashComplete, submitAnswers, ne
                 <>
                   <h2 className="result-correct">Correct!</h2>
                   <p>You identified all the target words.</p>
+                </>
+              ) : game.timedOut ? (
+                <>
+                  <h2 className="result-wrong">Time's up!</h2>
+                  <p>You ran out of time to select your answers.</p>
                 </>
               ) : (
                 <>

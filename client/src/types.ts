@@ -17,6 +17,7 @@ export interface LevelConfig {
   wordCount: number;
   targetWords: number;
   flashSpeed: number;
+  answerTime: number;
 }
 
 export interface GameState {
@@ -29,4 +30,5 @@ export interface GameState {
   targetIndices: number[];
   selectedAnswers: number[];
   roundCorrect: boolean | null;
+  timedOut: boolean;
 }

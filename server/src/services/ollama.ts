@@ -1,5 +1,5 @@
-const OLLAMA_URL = 'http://192.168.0.2:11434/api/generate';
-const MODEL = 'qwen3:1.7b';
+const OLLAMA_URL = process.env.OLLAMA_URL || 'http://localhost:11434/api/generate';
+const MODEL = process.env.OLLAMA_MODEL || 'qwen3:1.7b';
 
 export async function generateText(wordCount: number): Promise<string[]> {
   const prompt = `Write a coherent, engaging message using exactly ${wordCount} words. Use everyday English words. Do not use markdown or special formatting. Do not include any thinking or reasoning tags.`;

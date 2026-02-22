@@ -12,15 +12,16 @@ const initialState: GameState = {
   targetIndices: [],
   selectedAnswers: [],
   roundCorrect: null,
+  timedOut: false,
 };
 
 export function getLevelConfig(level: number): LevelConfig {
-  if (level <= 3) return { wordCount: 15, targetWords: 1, flashSpeed: 700 };
-  if (level <= 6) return { wordCount: 25, targetWords: level <= 4 ? 1 : 2, flashSpeed: 550 };
-  if (level <= 9) return { wordCount: 35, targetWords: 2, flashSpeed: 450 };
-  if (level <= 12) return { wordCount: 45, targetWords: 2, flashSpeed: 350 };
-  if (level <= 15) return { wordCount: 55, targetWords: level <= 13 ? 2 : 3, flashSpeed: 275 };
-  return { wordCount: 65, targetWords: 3, flashSpeed: 200 };
+  if (level <= 3) return { wordCount: 15, targetWords: 1, flashSpeed: 700, answerTime: 10 };
+  if (level <= 6) return { wordCount: 25, targetWords: level <= 4 ? 1 : 2, flashSpeed: 550, answerTime: 9 };
+  if (level <= 9) return { wordCount: 35, targetWords: 2, flashSpeed: 450, answerTime: 8 };
+  if (level <= 12) return { wordCount: 45, targetWords: 2, flashSpeed: 350, answerTime: 7 };
+  if (level <= 15) return { wordCount: 55, targetWords: level <= 13 ? 2 : 3, flashSpeed: 275, answerTime: 7 };
+  return { wordCount: 65, targetWords: 3, flashSpeed: 200, answerTime: 7 };
 }
 
 export function useGame() {
@@ -59,7 +60,7 @@ export function useGame() {
     setGame((prev) => ({ ...prev, phase: 'answering' }));
   }, []);
 
-  const submitAnswers = useCallback((selected: number[]) => {
+  const submitAnswers = useCallback((selected: number[], timedOut = false) => {
     setGame((prev) => {
       const targetSet = new Set(prev.targetIndices);
 
@@ -78,6 +79,7 @@ export function useGame() {
         ...prev,
         selectedAnswers: selected,
         roundCorrect: allCorrect,
+        timedOut,
         score: prev.score + Math.round(points),
         lives: newLives,
         phase: newLives <= 0 ? 'gameover' : 'result',
