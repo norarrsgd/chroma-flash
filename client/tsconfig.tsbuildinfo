@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/components/answerselect.tsx","./src/components/game.tsx","./src/components/gameover.tsx","./src/components/hud.tsx","./src/components/leaderboard.tsx","./src/components/startscreen.tsx","./src/components/wordflash.tsx","./src/hooks/usegame.ts","./src/services/api.ts"],"version":"5.9.3"}
